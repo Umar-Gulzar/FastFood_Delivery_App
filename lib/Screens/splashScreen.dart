@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'customerAccountScreen.dart';
+import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
       if(_currentUser==null)  ///If currentUser is null means it is not logged then move to login screen.
         Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerAccountScreen()));
       else    ///if currentUser is not null means user is already logged then move to home screen.
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerAccountScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
     });
 
     // TODO: implement initState

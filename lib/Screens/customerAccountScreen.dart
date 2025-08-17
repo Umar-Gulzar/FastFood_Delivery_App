@@ -1,3 +1,4 @@
+import 'package:fastfood_app/Screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
   final passwordController=TextEditingController();
   final _auth=FirebaseAuth.instance;
   late final tabController;
+  final userName=TextEditingController();
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    userName.dispose();
     tabController.dispose();
     // TODO: implement dispose
     super.dispose();
@@ -136,7 +139,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                           setState(() {
                                             isLoading=false;
                                           });
-                                          //Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageUpload()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
                                         }).onError((error,stack){
                                         //  Utils().toastMessage(error.toString());
                                           setState(() {
@@ -196,6 +199,22 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                   child: Column(
                                     children: [
                                       TextFormField(
+                                        controller: userName,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: "Username",
+                                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                                          prefixIcon:Icon(Icons.person),
+                                        ),
+                                        validator: (v)
+                                        {
+                                          if(v!.isEmpty)
+                                            return "Empty Field";
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 30,),
+                                      TextFormField(
                                         controller: emailController,
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
@@ -240,7 +259,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                       setState(() {
                                         isLoading=true;
                                       });
-                                      _auth.signInWithEmailAndPassword(
+                                      _auth.createUserWithEmailAndPassword(
                                         email:emailController.text,
                                         password:passwordController.text,
                                       ).then((v){
