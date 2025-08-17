@@ -1,18 +1,21 @@
-
 import 'package:flutter/material.dart';
-
 import 'Screens/splashScreen.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main()async
 {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       MaterialApp(
-        title: "Firebase",
+        title: "FastFood",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple
+              seedColor: Colors.pinkAccent
           ),
         ),
         home:SplashScreen(),

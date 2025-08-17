@@ -1,13 +1,8 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'loginScreen.dart';
-
-
-
-
-
+import 'package:lottie/lottie.dart';
+import 'customerAccountScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,30 +11,36 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
 
-  //final _currentUser=FirebaseAuth.instance.currentUser; ///To check if user is already logged we take currentUser.
+  final _currentUser=FirebaseAuth.instance.currentUser; ///To check if user is already logged we take currentUser.
 
   @override
   void initState() {
-
-    Timer(Duration(seconds: 2),(){
-     // if(_currentUser==null)  ///If currentUser is null means it is not logged then move to login screen.
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-     // else    ///if currentUser is not null means user is already logged then move to home screen.
-      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageUpload()));
+    Timer(Duration(seconds: 3),(){
+      if(_currentUser==null)  ///If currentUser is null means it is not logged then move to login screen.
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerAccountScreen()));
+      else    ///if currentUser is not null means user is already logged then move to home screen.
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerAccountScreen()));
     });
 
     // TODO: implement initState
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: const Center(
-        child: const Text("Fast Food",style: TextStyle(color: Colors.black,fontSize: 30),),
+    return  Scaffold(
+      body: Center(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: Color.fromRGBO(255, 248, 240, 1),
+          child:Container(height: 100,
+              width: 100,
+              child: Lottie.asset("assets/Images/food.json")),
+        ),
       ),
     );
   }

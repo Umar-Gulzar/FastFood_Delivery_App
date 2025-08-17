@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186892863700",
+    "project_id": "fastfood-app-94a23",
+    "storage_bucket": "fastfood-app-94a23.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186892863700:android:b58c11410636623ac4d341",
+        "android_client_info": {
+          "package_name": "com.umarDev.fastfood_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlRdeReqFZePObuY1UOqD_uP0zHYPmZug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
