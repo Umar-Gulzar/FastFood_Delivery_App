@@ -1,8 +1,9 @@
-import 'package:fastfood_app/Screens/homeScreen.dart';
+import 'package:fastfood_app/Screens/bottomNavigationBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:fastfood_app/Core/utils/Utils.dart';
 
 class CustomerAccountScreen extends StatefulWidget {
   const CustomerAccountScreen({super.key});
@@ -135,13 +136,13 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                           email:emailController.text,
                                           password:passwordController.text,
                                         ).then((v){
-                                         // Utils().toastMessage(v.user!.email.toString());
+                                          Utils().toastMessage(v.user!.email.toString());
                                           setState(() {
                                             isLoading=false;
                                           });
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationBarScreen()));
                                         }).onError((error,stack){
-                                        //  Utils().toastMessage(error.toString());
+                                          Utils().toastMessage(error.toString());
                                           setState(() {
                                             isLoading=false;
                                           });
@@ -150,7 +151,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                     },
                                       child:isLoading?const CircularProgressIndicator(color: Colors.white,strokeWidth: 3,):const Text("Login"),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.pink[300],
+                                        backgroundColor: Colors.deepOrange[300],
                                         foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(Radius.circular(10))
@@ -263,13 +264,12 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                         email:emailController.text,
                                         password:passwordController.text,
                                       ).then((v){
-                                        // Utils().toastMessage(v.user!.email.toString());
+                                         Utils().toastMessage(v.user!.email.toString());
                                         setState(() {
                                           isLoading=false;
                                         });
-                                        //Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageUpload()));
                                       }).onError((error,stack){
-                                        //  Utils().toastMessage(error.toString());
+                                          Utils().toastMessage(error.toString());
                                         setState(() {
                                           isLoading=false;
                                         });
@@ -278,7 +278,7 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                                   },
                                     child:isLoading?const CircularProgressIndicator(color: Colors.white,strokeWidth: 3,):const Text("Signup"),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.pink[300],
+                                      backgroundColor: Colors.deepOrange[300],
                                       foregroundColor: Colors.white,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(Radius.circular(10))

@@ -1,3 +1,4 @@
+import 'package:fastfood_app/Screens/foodMenu.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatelessWidget {
@@ -6,9 +7,6 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(255, 248, 240, 1),
-      ),
       backgroundColor:  Color.fromRGBO(255, 248, 240, 1),
       body: Center(
         child: Column(
@@ -24,11 +22,11 @@ class Cart extends StatelessWidget {
             Text(textAlign: TextAlign.center,"your menu yet."),
             const SizedBox(height: 50,),
             ElevatedButton(onPressed: (){
-        
+              Navigator.pop(context);
             },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink[300],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  backgroundColor: Colors.deepOrange[300],
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
                 child: Text("Back to Menu",style: TextStyle(color: Colors.white),)),
             Spacer(),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'Screens/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main()async
 {
@@ -10,15 +12,17 @@ void main()async
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-      MaterialApp(
-        title: "FastFood",
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.pinkAccent
+      ProviderScope(
+        child: MaterialApp(
+          title: "FastFood",
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor:Colors.deepOrange,
+            ),
           ),
+          home:SplashScreen(),
         ),
-        home:SplashScreen(),
       )
   );
 }
