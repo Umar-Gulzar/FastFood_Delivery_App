@@ -1,4 +1,4 @@
-import 'package:fastfood_app/Screens/foodMenu.dart';
+import 'foodMenu.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatelessWidget {

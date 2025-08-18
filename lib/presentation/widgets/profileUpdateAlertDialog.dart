@@ -5,15 +5,17 @@ Future<dynamic> ProfileUpdateAlertDialog({
   required BuildContext context,
   required WidgetRef ref,
   required String heading,
-  required dynamic currentValue,
+  required String currentValue,
   required dynamic userProvider,
 })
 {
   return showDialog(context: context, builder: (context){
+    final cV=TextEditingController();
+    cV.text=currentValue;
     return AlertDialog(
       title: Text(heading),
       content: TextFormField(
-        controller:currentValue,
+        controller:cV,
       ),
       actions: [
         TextButton(onPressed: (){
@@ -21,7 +23,8 @@ Future<dynamic> ProfileUpdateAlertDialog({
         },
             child: Text("Cancel")),
         TextButton(onPressed: (){
-          ref.read(userProvider.notifier).state=currentValue;
+          ref.read(userProvider.notifier).state=cV.text;
+          Navigator.pop(context);
         },
             child: Text("Update")),
       ],

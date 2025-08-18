@@ -1,11 +1,10 @@
-import 'package:fastfood_app/Screens/cart.dart';
-import 'package:fastfood_app/Screens/customerAccountScreen.dart';
-import 'package:fastfood_app/Screens/favouriteFoods.dart';
-import 'package:fastfood_app/Screens/foodMenu.dart';
-import 'package:fastfood_app/Screens/homeScreen.dart';
+import 'cart.dart';
+import 'customerAccountScreen.dart';
+import 'favouriteFoods.dart';
+import 'foodMenu.dart';
+import 'homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'customerProfile.dart';
 
 
