@@ -1,21 +1,13 @@
 import 'dart:io';
-
+import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
-
-  @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-
-  File? _img;
+class Profile extends ConsumerWidget {
   final _picker=ImagePicker();
 
-  Future getGalleryImage()async
+  Future getGalleryImage(WidgetRef ref)async
   {
     final pickedFile=await _picker.pickImage(source: ImageSource.gallery);
     if(pickedFile==null)
@@ -24,16 +16,11 @@ class _ProfileState extends State<Profile> {
     }
     else
     {
-      setState(() {
-        _img=File(pickedFile.path);
-      });
+      ref.read(imageProvider.notifier).state=File(pickedFile.path);
     }
 
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
+  }@override
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 248, 240, 1),
       body: Column(
@@ -43,10 +30,18 @@ class _ProfileState extends State<Profile> {
             height: 350,
             child: Stack(
               children: [
-                Container(
-                height: 300,
-                width: double.infinity,
-                child:_img!=null?Image.file(_img!.absolute,fit: BoxFit.cover,): const Icon(Icons.image),
+                Consumer(
+                  builder:(context,ref,child){
+                    final _img=ref.watch(imageProvider);
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.black))
+                      ),
+                      height: 300,
+                      width: double.infinity,
+                      child:_img!=null?Image.file(_img!.absolute,fit: BoxFit.cover,): const Icon(Icons.image),
+                    );
+                  },
                 ),
                 Positioned(
                   right: 15,
@@ -54,7 +49,7 @@ class _ProfileState extends State<Profile> {
                   child: CircleAvatar(
                     backgroundColor: Colors.deepOrange[300],
                     child: IconButton(onPressed: (){
-                      getGalleryImage();
+                      getGalleryImage(ref);
                     }, icon: Icon(Icons.edit,color: Colors.white,)),
                   ),
                 )
