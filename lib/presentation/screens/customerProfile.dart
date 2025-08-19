@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fastfood_app/Core/Utils/Utils.dart';
 import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,7 @@ class Profile extends ConsumerWidget {
 
   }@override
   Widget build(BuildContext context,WidgetRef ref) {
+    final _customer=ref.watch(customerStreamProvider);
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 248, 240, 1),
       body: Column(
@@ -55,57 +57,77 @@ class Profile extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 20,),
-          Padding(
-            padding: EdgeInsets.only(left: 15),
-              child: Text("Name",style: TextStyle(color: Colors.black54),)
-          ),
-          ListTile(
-            title: Text(ref.watch(userNameProvider)),
-            trailing:IconButton(icon: Icon(Icons.edit),onPressed: (){
-              ProfileUpdateAlertDialog(
-                  context: context,
-                  ref: ref,
-                  heading: "Name",
-                  currentValue:ref.watch(userNameProvider),
-                  userProvider: userNameProvider
-              );
-            },),
-          ),
-          Divider(indent: 15,endIndent: 15,),
-          Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Text("Phone Number",style: TextStyle(color: Colors.black54))
-          ),
-          ListTile(
-            title: Text(ref.watch(phoneNoProvider)),
-            trailing:IconButton(icon: Icon(Icons.edit),onPressed: (){
-              ProfileUpdateAlertDialog(
-                  context: context,
-                  ref: ref,
-                  heading: "Phone Number",
-                  currentValue:ref.watch(phoneNoProvider),
-                  userProvider: phoneNoProvider
-              );
-            },),
-          ),
-          Divider(indent: 15,endIndent: 15,),
-          Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Text("Address",style: TextStyle(color: Colors.black54))
-          ),
-          ListTile(
-            title: Text(ref.watch(addressProvider)),
-            trailing: IconButton(icon: Icon(Icons.edit),onPressed: (){
-              ProfileUpdateAlertDialog(
-                  context: context,
-                  ref: ref,
-                  heading: "Address",
-                  currentValue:ref.watch(addressProvider),
-                  userProvider: addressProvider
-              );
-            },),
-          ),
-          Divider(indent: 15,endIndent: 15,),
+
+          _customer.when(data: (cusData){
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text("Name",style: TextStyle(color: Colors.black54),)
+                ),
+                ListTile(  ///cusData ma sirf aik customer ka hi data ay ga email ki base par tu neechy hum docs.first kar sakty han.
+                  title: Text(cusData.docs.first['name']),
+                  trailing:IconButton(icon: Icon(Icons.edit),onPressed: (){
+                    ProfileUpdateAlertDialog(
+                        context: context,
+                        ref: ref,
+                        id: cusData.docs.first['id'],
+                        heading: "Name",
+                        currentValue:cusData.docs.first['name'],
+                        userProvider: userNameProvider
+                    );
+                  },),
+                ),
+                Divider(indent: 15,endIndent: 15,),
+                Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text("Phone Number",style: TextStyle(color: Colors.black54))
+                ),
+                ListTile(
+                  title: Text(cusData.docs.first['phone number']),
+                  trailing:IconButton(icon: Icon(Icons.edit),onPressed: (){
+                    ProfileUpdateAlertDialog(
+                        context: context,
+                        ref: ref,
+                        id: cusData.docs.first['id'],
+                        heading: "Phone Number",
+                        currentValue:cusData.docs.first['phone number'],
+                        userProvider: phoneNoProvider
+                    );
+                  },),
+                ),
+                Divider(indent: 15,endIndent: 15,),
+                Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text("Address",style: TextStyle(color: Colors.black54))
+                ),
+                ListTile(
+                  title: Text(cusData.docs.first['address']),
+                  trailing: IconButton(icon: Icon(Icons.edit),onPressed: (){
+                    ProfileUpdateAlertDialog(
+                        context: context,
+                        ref: ref,
+                        id: cusData.docs.first['id'],
+                        heading: "Address",
+                        currentValue:cusData.docs.first['address'],
+                        userProvider: addressProvider
+                    );
+                  },),
+                ),
+                Divider(indent: 15,endIndent: 15,),
+              ],
+            );
+          },
+              error:(error,s){
+                 return TextButton(
+                   onPressed: (){ref.invalidate(customerStreamProvider);}, //to refresh
+                   child: Text("Error: ${error}"));
+            },
+              loading: (){
+            return Center(child: CircularProgressIndicator(),);
+              }
+          )
         ],
       ),
     );
