@@ -30,13 +30,14 @@ class Profile extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 350,
+            height: 320,
             child: Stack(
               children: [
                 Consumer(
                   builder:(context,ref,child){
                     final _img=ref.watch(imageProvider);
                     return Container(
+                      color: Colors.grey,
                       height: 300,
                       width: double.infinity,
                       child:_img!=null?Image.file(_img!.absolute,fit: BoxFit.cover,): const Icon(Icons.image),
@@ -57,7 +58,6 @@ class Profile extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 20,),
-
           _customer.when(data: (cusData){
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

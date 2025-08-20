@@ -116,6 +116,7 @@ class _SignupTabState extends ConsumerState<SignupTab>
                       password:_passwordController.text,
                     ).then((v){
                       String id=DateTime.now().microsecondsSinceEpoch.toString();
+                      ref.read(userNameProvider.notifier).state=_userNameController.text;
                       _customerCollection.doc(id).set({
                         'name':_userNameController.text,
                         'id':id,
