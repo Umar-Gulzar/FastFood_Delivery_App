@@ -141,7 +141,7 @@ class _HomescreenState extends ConsumerState<Homescreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Popular Restaurents",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.black)),
-                    TextButton(onPressed: (){}, child:Text("View all",style: TextStyle(color: Colors.orange[300]),))
+                    TextButton(onPressed: (){}, child:Text("View all",style: TextStyle(color: Colors.deepOrange[300]),))
                   ],
                 ),
               ),
