@@ -138,94 +138,90 @@ class _FoodmenuState extends State<Foodmenu> {
             ),
           ),
           const SizedBox(height: 20,),
-          Expanded(
+          Flexible(
             child: Stack(
               children:[
                 Container(
-                  width: 130,
-                  height: 500,
+                  width: screenWidth*0.22,
+                  height: screenHeight*0.7,
                   decoration: BoxDecoration(
                       color: Colors.deepOrange[300],
                       borderRadius: BorderRadius.only(topRight: Radius.circular(50),bottomRight: Radius.circular(50))
                   ),
                 ),
-                ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: menu.length,
-                itemBuilder: (context,index){
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Container(
-                    height: 110,
-                    width: double.infinity,
-                    child: Stack(
-                      clipBehavior: Clip.antiAlias,
-                        children:[
-                          Center(
-                            child: Container(
-                              width: 400,
-                             // height: 60,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 248, 240, 1),
-                                  boxShadow: [
-                                    BoxShadow(offset: Offset(0, 2),blurRadius: 6,color: Colors.black26),
-                                  ],
-                                  borderRadius: BorderRadius.horizontal(left: Radius.elliptical(50,50),right: Radius.circular(15))
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 25,
-                            right: 30,
-                            child: RotatedBox(
-                              quarterTurns: 3,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(255, 248, 240, 1),
-                                  boxShadow: [
-                                    BoxShadow(offset: Offset(0, 2),blurRadius: 6,color: Colors.black26),
-                                  ],
-                                ),
-                                child: Image.asset("assets/img/dropdown.png"),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 10,
-                            left: 15,
-                            child: Row(
-                                children:[ Container(
-                                  width: 100,
-                                  height: 100,
+                Padding(
+                  padding: EdgeInsets.only(top: screenWidth*0.015),
+                  child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: menu.length,
+                  itemBuilder: (context,index){
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child:InkWell(
+                      onTap: (){},
+                      child: Stack(
+                            children:[
+                              Center(
+                                child: Container(
+                                  width: screenWidth*0.8,
+                                  height: screenWidth*0.21,
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(offset: Offset(0, 2),blurRadius: 12,color: Colors.black26),
-                                    ],
+                                      color: Color.fromRGBO(255, 248, 240, 1),
+                                      boxShadow: [
+                                        BoxShadow(offset: Offset(0, 4),blurRadius: 6,color: Colors.black26),
+                                      ],
+                                      borderRadius: BorderRadius.horizontal(left: Radius.elliptical(50,50),right: Radius.circular(15))
                                   ),
-                                  child: Image.asset(menu[index]["image"]),
                                 ),
-                                  SizedBox(width: 15,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    spacing: 3,
-                                    children: [
-                                      Text(menu[index]["name"],style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25),),
-                                      Text(menu[index]["items_count"]+" items")
-                                    ],
+                              ),
+                              Positioned(
+                                top: 25,
+                                right: 30,
+                                child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Container(
+                                    height: screenWidth*0.09,
+                                    width: screenWidth*0.09,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(255, 248, 240, 1),
+                                      boxShadow: [
+                                        BoxShadow(offset: Offset(0, 2),blurRadius: 6,color: Colors.black26),
+                                      ],
+                                    ),
+                                    child: Image.asset("assets/img/dropdown.png"),
                                   ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 10,
+                                left: 15,
+                                child: Row(
+                                    children:[ Container(
+                                      width: screenWidth*0.18,
+                                      height: screenWidth*0.18,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.asset(menu[index]["image"]),
+                                    ),
+                                      SizedBox(width: 15,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        spacing: 3,
+                                        children: [
+                                          Text(menu[index]["name"],style: TextStyle(fontWeight: FontWeight.w600,fontSize: screenWidth*0.04),),
+                                          Text(menu[index]["items_count"]+" items")
+                                        ],
+                                      ),
 
-                                ]),
-                          )
-
-
-                        ]),
-                  ),
-                );
-                                },),
+                                    ]),
+                              )
+                            ]),
+                    ),
+                  );
+                                  },),
+                ),
             ]),
           ),
 
