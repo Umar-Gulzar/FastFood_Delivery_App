@@ -1,6 +1,9 @@
+import 'package:fastfood_app/presentation/screens/menuItemsShow.dart';
 import 'package:flutter/material.dart';
-
 import 'cart.dart';
+import 'dessertsItems.dart';
+
+List menuItems=[dessertsItems];
 
 class Foodmenu extends StatefulWidget {
   const Foodmenu({super.key});
@@ -34,74 +37,6 @@ class _FoodmenuState extends State<Foodmenu> {
     },
   ];
 
-
-
-  List dessertsItems= [
-    {
-      "image": "assets/img/dess_1.png",
-      "name": "French Apple Pie",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Minute by tuk tuk",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_2.png",
-      "name": "Dark Chocolate Cake",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Cakes by Tella",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_3.png",
-      "name": "Street Shake",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Café Racer",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_4.png",
-      "name": "Fudgy Chewy Brownies",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Minute by tuk tuk",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_1.png",
-      "name": "French Apple Pie",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Minute by tuk tuk",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_2.png",
-      "name": "Dark Chocolate Cake",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Cakes by Tella",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_3.png",
-      "name": "Street Shake",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Café Racer",
-      "food_type": "Desserts"
-    },
-    {
-      "image": "assets/img/dess_4.png",
-      "name": "Fudgy Chewy Brownies",
-      "rate": "4.9",
-      "rating": "124",
-      "type": "Minute by tuk tuk",
-      "food_type": "Desserts"
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +93,9 @@ class _FoodmenuState extends State<Foodmenu> {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child:InkWell(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuItemsShow(menuList: menuItems[0],)));
+                      },
                       child: Stack(
                             children:[
                               Center(
