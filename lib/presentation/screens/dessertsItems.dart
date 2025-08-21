@@ -1,6 +1,5 @@
 
-
-List dessertsItems= [
+List dessertsItems = [
   {
     "image": "assets/img/dess_1.png",
     "name": "French Apple Pie",
@@ -8,7 +7,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Minute by tuk tuk",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "6.50",
+    "description": "Buttery crust filled with sweet cinnamon apples, baked to golden perfection. A warm and classic French treat.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_2.png",
@@ -17,7 +18,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Cakes by Tella",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "7.20",
+    "description": "Rich and moist chocolate sponge layered with silky ganache. A heavenly delight for true chocolate lovers.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_3.png",
@@ -26,7 +29,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Café Racer",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "5.00",
+    "description": "Creamy milkshake blended with ice cream, topped with whipped cream and a drizzle of chocolate syrup.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_4.png",
@@ -35,7 +40,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Minute by tuk tuk",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "4.80",
+    "description": "Thick, gooey brownies with crispy edges and a chewy chocolate center. The ultimate brownie experience.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_1.png",
@@ -44,7 +51,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Minute by tuk tuk",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "6.50",
+    "description": "Buttery crust filled with sweet cinnamon apples, baked to golden perfection. A warm and classic French treat.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_2.png",
@@ -53,7 +62,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Cakes by Tella",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "7.20",
+    "description": "Rich and moist chocolate sponge layered with silky ganache. A heavenly delight for true chocolate lovers.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_3.png",
@@ -62,7 +73,9 @@ List dessertsItems= [
     "rating": "124",
     "type": "Café Racer",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "5.00",
+    "description": "Creamy milkshake blended with ice cream, topped with whipped cream and a drizzle of chocolate syrup.",
+    "isFavourite": false
   },
   {
     "image": "assets/img/dess_4.png",
@@ -71,6 +84,8 @@ List dessertsItems= [
     "rating": "124",
     "type": "Minute by tuk tuk",
     "food_type": "Desserts",
-    "isFavourite":false
+    "price": "4.80",
+    "description": "Thick, gooey brownies with crispy edges and a chewy chocolate center. The ultimate brownie experience.",
+    "isFavourite": false
   },
 ];

@@ -1,3 +1,4 @@
+import 'package:fastfood_app/presentation/screens/itemDetail.dart';
 import 'package:flutter/material.dart';
 import 'cart.dart';
 
@@ -77,39 +78,44 @@ class _MenuItemsShowState extends State<MenuItemsShow> {
                   Positioned(
                     bottom: 0,
                     left: 0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                                widget.menuList[index]["name"],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                )
-                            )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                child: Image.asset("assets/img/rate.png"),
-                                height: 15,
-                                width: 15,
-                              ),
-                              Text(widget.menuList[index]["rate"],style: TextStyle(color: Colors.white,),),
-                              Text("("+widget.menuList[index]["rating"]+" ratings)",style: TextStyle(color: Colors.white,),),
-                              Text(widget.menuList[index]['type'],style: TextStyle(color: Colors.white,),),
-                              SizedBox(width: 10,),
-                              Text(widget.menuList[index]["food_type"],style: TextStyle(color: Colors.white,),)
-                            ],
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ItemDetail(selectedItem:widget.menuList[index])));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                  widget.menuList[index]["name"],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  )
+                              )
                           ),
-                        ),
-                        SizedBox(height: 10,),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  child: Image.asset("assets/img/rate.png"),
+                                  height: 15,
+                                  width: 15,
+                                ),
+                                Text(widget.menuList[index]["rate"],style: TextStyle(color: Colors.white,),),
+                                Text("("+widget.menuList[index]["rating"]+" ratings)",style: TextStyle(color: Colors.white,),),
+                                Text(widget.menuList[index]['type'],style: TextStyle(color: Colors.white,),),
+                                SizedBox(width: 10,),
+                                Text(widget.menuList[index]["food_type"],style: TextStyle(color: Colors.white,),)
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(
