@@ -61,6 +61,7 @@ class _MenuItemsShowState extends State<MenuItemsShow> {
 
             const SizedBox(height: 20,),
             ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: widget.menuList.length,
             itemBuilder: (context,index){

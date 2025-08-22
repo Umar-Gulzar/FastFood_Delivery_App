@@ -15,14 +15,14 @@ class _CartState extends ConsumerState<Cart> {
   double singleItemPrice=0;
 
   @override
-  void initState() {
-    // int length=ref.watch(cartItemsProvider.notifier).getLength();
-    // for(int index=0;index<length;index++)
-    // {
-    //   double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
-    //   singleItemPrice=price*ref.watch(cartItemQuantity.notifier).getQuantity(index);
-    //   totalPrice=totalPrice+singleItemPrice;
-    // }
+  void ConsumerinitState(WidgetRef ref) {
+    int length=ref.watch(cartItemsProvider).length;
+    int quan;
+    for(int index=0;index<length;index++)
+    {
+      double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
+        totalPrice=totalPrice+price;
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -204,6 +204,10 @@ class _CartState extends ConsumerState<Cart> {
                       ),
                       Spacer(),
                       IconButton(onPressed: (){
+                        setState(() {
+                          singleItemPrice=price*ref.watch(cartItemQuantity.notifier).getQuantity(index);
+                          totalPrice=totalPrice-singleItemPrice;
+                        });
                         ref.read(cartItemsProvider.notifier).removeCartItem(index);
                         ref.read(cartItemQuantity.notifier).removeItemQuantity(index);
                       },
@@ -233,7 +237,7 @@ class _CartState extends ConsumerState<Cart> {
                 ]),
                   ),
             ),
-              const SizedBox(height: 100,),
+              SizedBox(height: 120,),
               ]),
         ),
       )
