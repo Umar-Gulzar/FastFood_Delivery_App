@@ -1,19 +1,38 @@
+import 'package:fastfood_app/application/providers/Providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'foodMenu.dart';
 import 'package:flutter/material.dart';
 import 'itemDetail.dart';
 
-//dynamic list=cartItems.toList();
-
-class Cart extends StatefulWidget {
+class Cart extends ConsumerStatefulWidget{
   const Cart({super.key});
   @override
-  State<Cart> createState() => _CartState();
+  ConsumerState<Cart> createState() => _CartState();
 }
-class _CartState extends State<Cart> {
+class _CartState extends ConsumerState<Cart> {
+
+  double totalPrice=0;
+  double singleItemPrice=0;
+
+  @override
+  void initState() {
+    // int length=ref.watch(cartItemsProvider.notifier).getLength();
+    // for(int index=0;index<length;index++)
+    // {
+    //   double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
+    //   singleItemPrice=price*ref.watch(cartItemQuantity.notifier).getQuantity(index);
+    //   totalPrice=totalPrice+singleItemPrice;
+    // }
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
+    var length = ref.watch(cartItemsProvider).length;
+
     return Scaffold(
-      appBar:cartItems.length==0?AppBar(
+      appBar:length==0?AppBar(
         automaticallyImplyLeading: false,
         title:InkWell(
           onTap:(){
@@ -40,7 +59,7 @@ class _CartState extends State<Cart> {
                     child: Image.asset("assets/img/btn_back.png")
                 ),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width*0.4,),
+              SizedBox(width: MediaQuery.of(context).size.width*0.35,),
               Center(
                 child: Text("Cart",style: TextStyle(color: Colors.black87,fontWeight: FontWeight.w600,fontSize: 30),
                 ),
@@ -48,7 +67,7 @@ class _CartState extends State<Cart> {
         foregroundColor: Color.fromRGBO(255, 248, 240, 1),
       ),
       backgroundColor:  Color.fromRGBO(255, 248, 240, 1),
-      body:cartItems.length==0? Center(
+      body:length==0? Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -73,106 +92,151 @@ class _CartState extends State<Cart> {
           ],
         ),
       ):
-      Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context,index){
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow:[BoxShadow(
-                  offset: Offset(0, 4),
-                  blurRadius: 6,
-                  color: Colors.black12,
-                )],
-                color: Color.fromRGBO(255, 248, 240, 1),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.asset(cartItems[index]["image"],fit: BoxFit.cover,),
-                                  ),
+      SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width:MediaQuery.of(context).size.width,
+          child: Column(
+            children:[
+              const SizedBox(height: 20,),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                  itemCount:length,
+                  itemBuilder: (context,index){
+
+                    String name=ref.watch(cartItemsProvider.notifier).getName(index);
+                    String image=ref.watch(cartItemsProvider.notifier).getImage(index);
+                    double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow:[BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 6,
+                          color: Colors.black12,
+                    )],
+                    color: Color.fromRGBO(255, 248, 240, 1),
                   ),
-                  SizedBox(width: 10,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                          cartItems[index]["name"],
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Colors.black87,
-                          )
+                      SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.asset(image,fit: BoxFit.cover,),
+                                      ),
                       ),
-                      Row(
+                      SizedBox(width: 10,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            child: Image.asset("assets/img/cash.png"),
-                            height: 20,
-                            width: 20,
-                          ),
                           Text(
-                              cartItems[index]["price"],
+                              name,
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17,
-                                color: Colors.black54,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: Colors.black87,
                               )
                           ),
-                        ],
-                      ),
-                      Card(
-                        shadowColor: Colors.black12,
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
-                        color:Color.fromRGBO(255, 248, 240, 1),
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Row(
+                          Row(
                             children: [
-                              OutlinedButton(onPressed: (){
-                          
-                              },
-                              child:Text("+",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-                              Text(" 2 ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
-                              OutlinedButton(
-                                  onPressed: (){
-                          
-                                  },
-                                  child: Text("-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
-                              )
+                              SizedBox(
+                                child: Image.asset("assets/img/cash.png"),
+                                height: 20,
+                                width: 20,
+                              ),
+                              Text(
+                                  price.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17,
+                                    color: Colors.black54,
+                                  )
+                              ),
                             ],
                           ),
-                        ),
+                          Card(
+                            shadowColor: Colors.black12,
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+                            color:Color.fromRGBO(255, 248, 240, 1),
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Consumer(
+                                builder: (context,ref,child){
+                                  int quantity=ref.watch(cartItemQuantity.notifier).getQuantity(index);
+                                  return Row(
+                                    children: [
+                                      OutlinedButton(onPressed: (){
+                                        ref.read(cartItemQuantity.notifier).incrementQuantity(index);
+                                        setState(() {
+                                          singleItemPrice=price;
+                                          totalPrice=totalPrice+singleItemPrice;
+                                        });
+                                      },
+                                          child:Text("+",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                                      Text(" ${quantity} ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                                      OutlinedButton(
+                                          onPressed: (){
+                                              if(quantity>1) {
+                                                ref.read(cartItemQuantity.notifier).decrementQuantity(index);
+                                                singleItemPrice=price;
+                                                setState(() {
+                                                  totalPrice=totalPrice-singleItemPrice;
+                                                });
+                                              }
+                                          },
+                                          child: Text("-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+                                      )
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          )
+
+                        ],
+                      ),
+                      Spacer(),
+                      IconButton(onPressed: (){
+                        ref.read(cartItemsProvider.notifier).removeCartItem(index);
+                        ref.read(cartItemQuantity.notifier).removeItemQuantity(index);
+                      },
+                      icon: Icon(Icons.delete),
                       )
-
-
                     ],
                   ),
+                ),
+              );
+                      }),
+           Spacer(),
+            SizedBox(
+              width: 180,
+              child: ElevatedButton(onPressed: (){
 
-                  SizedBox(width: 150,),
-                  IconButton(onPressed: (){
-                    setState(() {
-                      cartItems.removeAt(index);
-                    });
-                  },
-                  icon: Icon(Icons.delete),
-                  )
-                ],
-              ),
+
+              },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange[300],
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                child: Row(
+                    children:[
+                      Text("Pay: ",style: TextStyle(color: Colors.white,fontSize: 20),),
+                      Text("\$ ",style: TextStyle(color: Colors.black,fontSize: 20),),
+                      Text("${totalPrice.toStringAsFixed(2)}",style: TextStyle(color: Colors.white,fontSize: 20),)
+                ]),
+                  ),
             ),
-          );
-        }),
-      ),
-    );
+              const SizedBox(height: 100,),
+              ]),
+        ),
+      )
+      );
   }
 }

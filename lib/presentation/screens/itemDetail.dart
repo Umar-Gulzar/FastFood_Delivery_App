@@ -1,20 +1,13 @@
+import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:fastfood_app/presentation/screens/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-List<dynamic> cartItems=[];
-
-class ItemDetail extends StatefulWidget {
+class ItemDetail extends ConsumerWidget{
   Map<String,dynamic> selectedItem;
   ItemDetail({super.key,required this.selectedItem});
-
   @override
-  State<ItemDetail> createState() => _ItemDetailState();
-}
-
-class _ItemDetailState extends State<ItemDetail> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 248, 240, 1),
       body: Column(
@@ -23,7 +16,7 @@ class _ItemDetailState extends State<ItemDetail> {
             children:[ SizedBox(
               height: 350,
               width: double.infinity,
-              child: Image.asset(widget.selectedItem["image"],fit: BoxFit.cover,),
+              child: Image.asset(selectedItem["image"],fit: BoxFit.cover,),
             ),
             Positioned(
               top: 30,
@@ -51,7 +44,7 @@ class _ItemDetailState extends State<ItemDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    widget.selectedItem["name"],
+                    selectedItem["name"],
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
@@ -66,16 +59,16 @@ class _ItemDetailState extends State<ItemDetail> {
                       height: 15,
                       width: 15,
                     ),
-                    Text(widget.selectedItem["rate"],style: TextStyle(color: Colors.black87,),),
-                    Text("("+widget.selectedItem["rating"]+" ratings)",style: TextStyle(color: Colors.black87,),),
-                    Text(widget.selectedItem['type'],style: TextStyle(color: Colors.black87,),),
+                    Text(selectedItem["rate"],style: TextStyle(color: Colors.black87,),),
+                    Text("("+selectedItem["rating"]+" ratings)",style: TextStyle(color: Colors.black87,),),
+                    Text(selectedItem['type'],style: TextStyle(color: Colors.black87,),),
                     SizedBox(width: 10,),
-                    Text(widget.selectedItem["food_type"],style: TextStyle(color: Colors.black87,),)
+                    Text(selectedItem["food_type"],style: TextStyle(color: Colors.black87,),)
                   ],
                 ),
                 const SizedBox(height:15,),
                 Text(
-                    widget.selectedItem["description"],
+                    selectedItem["description"],
                     style: TextStyle(
                       color: Colors.black45,
                       fontSize: 20,
@@ -95,7 +88,7 @@ class _ItemDetailState extends State<ItemDetail> {
                       width: 20,
                     ),
                     Text(
-                        widget.selectedItem["price"],
+                        selectedItem["price"],
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -113,9 +106,8 @@ class _ItemDetailState extends State<ItemDetail> {
           SizedBox(
             width: 180,
             child: ElevatedButton(onPressed: (){
-              setState(() {
-                cartItems.add(widget.selectedItem);
-              });
+                ref.read(cartItemsProvider.notifier).addCartItem(value: selectedItem);
+                ref.read(cartItemQuantity.notifier).addQuantity();
             },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepOrange[300],

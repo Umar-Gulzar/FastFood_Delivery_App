@@ -1,3 +1,4 @@
+import 'package:fastfood_app/presentation/screens/itemDetail.dart';
 import 'package:flutter/material.dart';
 import 'cart.dart';
 import 'foodMenu.dart';
@@ -69,51 +70,56 @@ class _FavouriteFoodsState extends State<FavouriteFoods> {
                             Positioned(
                               bottom: 0,
                               left: 0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ItemDetail(selectedItem: menuItems[0][index])));
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Text(
+                                            menuItems[0][index]["name"],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                            )
+                                        )
+                                    ),
+                                    Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 20),
-                                      child: Text(
-                                          menuItems[0][index]["name"],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                          )
-                                      )
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          child: Image.asset(
-                                              "assets/img/rate.png"),
-                                          height: 15,
-                                          width: 15,
-                                        ),
-                                        Text(menuItems[0][index]["rate"],
-                                          style: TextStyle(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            child: Image.asset(
+                                                "assets/img/rate.png"),
+                                            height: 15,
+                                            width: 15,
+                                          ),
+                                          Text(menuItems[0][index]["rate"],
+                                            style: TextStyle(
+                                              color: Colors.white,),),
+                                          Text(
+                                            "(" + menuItems[0][index]["rating"] +
+                                                " ratings)", style: TextStyle(
                                             color: Colors.white,),),
-                                        Text(
-                                          "(" + menuItems[0][index]["rating"] +
-                                              " ratings)", style: TextStyle(
-                                          color: Colors.white,),),
-                                        Text(menuItems[0][index]['type'],
-                                          style: TextStyle(
-                                            color: Colors.white,),),
-                                        SizedBox(width: 10,),
-                                        Text(menuItems[0][index]["food_type"],
-                                          style: TextStyle(
-                                            color: Colors.white,),)
-                                      ],
+                                          Text(menuItems[0][index]['type'],
+                                            style: TextStyle(
+                                              color: Colors.white,),),
+                                          SizedBox(width: 10,),
+                                          Text(menuItems[0][index]["food_type"],
+                                            style: TextStyle(
+                                              color: Colors.white,),)
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                ],
+                                    SizedBox(height: 10,),
+                                  ],
+                                ),
                               ),
                             ),
                             Positioned(
