@@ -51,31 +51,34 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
             width:screenWidth<800?screenWidth*0.95:screenWidth*0.4,
             child: Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.02),
-              child: Column(
-                children: [
-                  Container(
-                height: 150,
-                    child: Lottie.network(
-                      fit: BoxFit.cover,
-                        "https://lottie.host/014dd969-e665-4e3b-bfcb-32d0a06a4684/JQjTjPdcUm.json",
-                  )),
-                  TabBar(tabs: [
-                    const Tab(child:const Text("Login"),),
-                    const Tab(child:const Text("SignUp"),),
+              child: Padding(
+                padding:screenWidth<401? EdgeInsets.only(top: 100):EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Container(
+                  height: 150,
+                      child: Lottie.network(
+                        fit: BoxFit.cover,
+                          "https://lottie.host/014dd969-e665-4e3b-bfcb-32d0a06a4684/JQjTjPdcUm.json",
+                    )),
+                    TabBar(tabs: [
+                      const Tab(child:const Text("Login"),),
+                      const Tab(child:const Text("SignUp"),),
+                    ],
+                    indicatorAnimation: TabIndicatorAnimation.elastic,
+                    controller: tabController,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                    ),
+                    Flexible(
+                      child: TabBarView(
+                        controller: tabController,
+                          children: [
+                            LoginTab(),
+                            SignupTab(),
+                      ]),
+                    )
                   ],
-                  indicatorAnimation: TabIndicatorAnimation.elastic,
-                  controller: tabController,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                  ),
-                  Flexible(
-                    child: TabBarView(
-                      controller: tabController,
-                        children: [
-                          LoginTab(),
-                          SignupTab(),
-                    ]),
-                  )
-                ],
+                ),
               ),
             ),
           ),

@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:fastfood_app/Core/Utils/Utils.dart';
 import 'package:fastfood_app/application/providers/Providers.dart';
+import 'package:fastfood_app/presentation/screens/customerAccountScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +27,24 @@ class Profile extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     final _customer=ref.watch(customerStreamProvider);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(255, 248, 240, 1),
+        automaticallyImplyLeading: false,
+        title: Row(
+            children: [
+              Text("Profile",style: TextStyle(color: Colors.black87,fontWeight: FontWeight.w600),
+              )]),
+        foregroundColor: Color.fromRGBO(255, 248, 240, 1),
+        actions: [
+          IconButton(
+          tooltip: "Log out",
+          onPressed: (){
+            FirebaseAuth.instance.signOut().then((v) =>Navigator.push(context,MaterialPageRoute(builder: (context)=>CustomerAccountScreen()))
+            );
+          }, icon: Icon(Icons.logout,color: Colors.black87,)),
+          const SizedBox(width: 10,),
+        ],
+      ),
       backgroundColor: Color.fromRGBO(255, 248, 240, 1),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

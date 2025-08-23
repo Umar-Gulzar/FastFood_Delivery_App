@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
           color: Color.fromRGBO(255, 248, 240, 1),
           child:Container(height: 100,
               width: 100,
-              child: Lottie.asset("assets/LottieAnimations/food.json")),
+              child: Lottie.asset("assets/LottieAnimations/foodies.json")),
         ),
       ),
     );

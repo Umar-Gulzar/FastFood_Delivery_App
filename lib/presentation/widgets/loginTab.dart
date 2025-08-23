@@ -47,6 +47,7 @@ class _LoginTabState extends ConsumerState<LoginTab>
             child: Column(
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
