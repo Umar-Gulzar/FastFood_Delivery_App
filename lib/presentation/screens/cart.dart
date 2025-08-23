@@ -167,8 +167,7 @@ class _CartState extends ConsumerState<Cart> {
                                     children: [
                                       OutlinedButton(onPressed: (){
                                         ref.read(cartItemQuantity.notifier).incrementQuantity(index);
-                                        singleItemPrice=price;
-                                        ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)+singleItemPrice;
+                                        ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)+price;
                                       },
                                           child:Text("+",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                                       Text(" ${quantity} ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
@@ -176,8 +175,7 @@ class _CartState extends ConsumerState<Cart> {
                                           onPressed: (){
                                               if(quantity>1) {
                                                 ref.read(cartItemQuantity.notifier).decrementQuantity(index);
-                                                singleItemPrice=price;
-                                                ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)-singleItemPrice;
+                                                ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)-price;
                                               }
                                           },
                                           child: Text("-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
