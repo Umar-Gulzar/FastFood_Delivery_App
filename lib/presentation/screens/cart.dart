@@ -1,3 +1,4 @@
+import 'package:fastfood_app/Services/stripePaymentSheet.dart';
 import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'foodMenu.dart';
@@ -222,8 +223,7 @@ class _CartState extends ConsumerState<Cart> {
             SizedBox(
               width: 180,
               child: ElevatedButton(onPressed: (){
-
-
+                makePayment(context,10, "Uae");
               },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepOrange[300],
