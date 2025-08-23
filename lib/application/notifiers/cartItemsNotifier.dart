@@ -31,9 +31,9 @@ class CartItemsNotifier extends StateNotifier<List<Map<String,dynamic>>>
   {
     return state[index]["image"];
   }
-  double getPrice(int index)
+  int getPrice(int index)
   {
-    return double.parse(state[index]["price"]);
+    return int.parse(state[index]["price"]);
   }
   String getName(int index)
   {

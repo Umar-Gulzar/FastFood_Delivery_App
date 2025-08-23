@@ -109,6 +109,8 @@ class ItemDetail extends ConsumerWidget{
               child: ElevatedButton(onPressed: (){
                   ref.read(cartItemsProvider.notifier).addCartItem(value: selectedItem);
                   ref.read(cartItemQuantity.notifier).addQuantity();
+                  ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider) +
+                      ref.watch(cartItemsProvider.notifier).getPrice( ref.watch(cartItemsProvider.notifier).getLength()-1).toInt();
               },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepOrange[300],

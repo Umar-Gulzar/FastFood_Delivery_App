@@ -22,6 +22,8 @@ final customerStreamProvider=StreamProvider((ref){
   return FirebaseFirestore.instance.collection("customer").where('creator',isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots();
 });
 
+final totalPriceProvider=StateProvider((ref)=>0);
+
 
 final cartItemsProvider=StateNotifierProvider<CartItemsNotifier,List<Map<String,dynamic>>>((ref){
   return CartItemsNotifier();

@@ -12,18 +12,10 @@ class Cart extends ConsumerStatefulWidget{
 }
 class _CartState extends ConsumerState<Cart> {
 
-  double totalPrice=0;
-  double singleItemPrice=0;
+  int singleItemPrice=0;
 
   @override
   void ConsumerinitState(WidgetRef ref) {
-    int length=ref.watch(cartItemsProvider).length;
-    int quan;
-    for(int index=0;index<length;index++)
-    {
-      double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
-        totalPrice=totalPrice+price;
-    }
     // TODO: implement initState
     super.initState();
   }
@@ -108,7 +100,7 @@ class _CartState extends ConsumerState<Cart> {
 
                     String name=ref.watch(cartItemsProvider.notifier).getName(index);
                     String image=ref.watch(cartItemsProvider.notifier).getImage(index);
-                    double price=ref.watch(cartItemsProvider.notifier).getPrice(index);
+                    int price=ref.watch(cartItemsProvider.notifier).getPrice(index);
 
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
@@ -175,10 +167,8 @@ class _CartState extends ConsumerState<Cart> {
                                     children: [
                                       OutlinedButton(onPressed: (){
                                         ref.read(cartItemQuantity.notifier).incrementQuantity(index);
-                                        setState(() {
-                                          singleItemPrice=price;
-                                          totalPrice=totalPrice+singleItemPrice;
-                                        });
+                                        singleItemPrice=price;
+                                        ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)+singleItemPrice;
                                       },
                                           child:Text("+",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                                       Text(" ${quantity} ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
@@ -187,9 +177,7 @@ class _CartState extends ConsumerState<Cart> {
                                               if(quantity>1) {
                                                 ref.read(cartItemQuantity.notifier).decrementQuantity(index);
                                                 singleItemPrice=price;
-                                                setState(() {
-                                                  totalPrice=totalPrice-singleItemPrice;
-                                                });
+                                                ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)-singleItemPrice;
                                               }
                                           },
                                           child: Text("-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
@@ -205,10 +193,9 @@ class _CartState extends ConsumerState<Cart> {
                       ),
                       Spacer(),
                       IconButton(onPressed: (){
-                        setState(() {
-                          singleItemPrice=price*ref.watch(cartItemQuantity.notifier).getQuantity(index);
-                          totalPrice=totalPrice-singleItemPrice;
-                        });
+                        singleItemPrice=price*ref.watch(cartItemQuantity.notifier).getQuantity(index);
+                        ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider)-singleItemPrice;
+                        ///uppar ref.read..ko kisi var. ma store karwa ky uss var ma chane karny sy state change nhi ho gi.
                         ref.read(cartItemsProvider.notifier).removeCartItem(index);
                         ref.read(cartItemQuantity.notifier).removeItemQuantity(index);
                       },
@@ -233,7 +220,11 @@ class _CartState extends ConsumerState<Cart> {
                     children:[
                       Text("Pay: ",style: TextStyle(color: Colors.white,fontSize: 20),),
                       Text("\$ ",style: TextStyle(color: Colors.black,fontSize: 20),),
-                      Text("${totalPrice.toStringAsFixed(2)}",style: TextStyle(color: Colors.white,fontSize: 20),)
+                      Consumer(
+                        builder: (context,ref,child){
+                          final totalPrice=ref.watch(totalPriceProvider);
+                          return Text("${totalPrice.toStringAsFixed(2)}",style: TextStyle(color: Colors.white,fontSize: 20));}
+                      )
                 ]),
                   ),
             ),
