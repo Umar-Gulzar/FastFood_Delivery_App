@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:fastfood_app/presentation/screens/itemDetail.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'cart.dart';
 
 class MenuItemsShow extends StatefulWidget {
@@ -12,6 +16,9 @@ class MenuItemsShow extends StatefulWidget {
 
 class _MenuItemsShowState extends State<MenuItemsShow> {
   @override
+
+  final favouriteCollection=FirebaseFirestore.instance.collection("favourite");
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 248, 240, 1),
@@ -122,22 +129,66 @@ class _MenuItemsShowState extends State<MenuItemsShow> {
                   Positioned(
                   top: 10,
                   right: 10,
-                  child: IconButton(
-                    onPressed: (){
-                      if(widget.menuList[index]["isFavourite"]==false) {
-                        setState(() {
-                          widget.menuList[index]["isFavourite"] = true;
-                        });}
-                      else {
-                        setState(() {
-                          widget.menuList[index]["isFavourite"] = false;
-                        });
+                    child: Consumer(
+                    builder:(context,ref,child) {
+                      final data = ref.watch(favouriteListStreamProvider);
+                      return data.when(
+                      data: (data) {
+                        return IconButton(
+                          icon: widget.menuList[index]["isFavourite"] ? Icon(
+                            Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border),
+                            color: Colors.white,
+                            onPressed: () {
+                              if (widget.menuList[index]["isFavourite"] ==
+                                  false) {
+                                setState(() {
+                                  widget.menuList[index]["isFavourite"] = true;
+                                });
+                                String id = DateTime
+                                    .now()
+                                    .microsecondsSinceEpoch
+                                    .toString();
+                                favouriteCollection.doc(id).set({
+                                  "isFavourite": true,
+                                  "name": widget.menuList[index]["name"],
+                                  "image": widget.menuList[index]["image"],
+                                  "rate": widget.menuList[index]["rate"],
+                                  "rating": widget.menuList[index]["rating"],
+                                  "price": widget.menuList[index]["price"],
+                                  "type": widget.menuList[index]["type"],
+                                  "food_type": widget
+                                      .menuList[index]["food_type"],
+                                  'id': id,
+                                  'postedAt': FieldValue.serverTimestamp(),
+                                  'creator': FirebaseAuth.instance.currentUser!
+                                      .uid
+                                      .toString(),
+                                });
+                              }
+                              else {
+                                setState(() {
+                                  widget.menuList[index]["isFavourite"] = false;
+                                });
+                                final i = data.docs[index]["id"];
+                                FirebaseFirestore.instance
+                                    .collection("favourite")
+                                    .doc(i)
+                                    .delete();
+                              }
+                            }
+                        );
+                      },
+                      error: (e, s) {
+                        return Text(e.toString());
+                        },
+                        loading: () {
+                        return const CircularProgressIndicator();
                       }
-                    },
-                    icon:widget.menuList[index]["isFavourite"]?Icon(Icons.favorite,color: Colors.red,): Icon(Icons.favorite_border),
-                    color: Colors.white,
+                          );
+                        },
+
+                    ),
                   )
-                  ),
               ]),
               );
             })

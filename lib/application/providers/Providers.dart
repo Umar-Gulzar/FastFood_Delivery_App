@@ -18,6 +18,10 @@ final customerStreamProvider=StreamProvider((ref){
   return FirebaseFirestore.instance.collection("customer").where('creator',isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots();
 });
 
+final favouriteListStreamProvider=StreamProvider((ref){
+  return FirebaseFirestore.instance.collection("favourite").where('creator',isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots();
+});
+
 final totalPriceProvider=StateProvider((ref)=>0);
 
 
