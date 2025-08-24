@@ -57,9 +57,9 @@ class _CustomerAccountScreenState extends State<CustomerAccountScreen>
                   children: [
                     Container(
                   height: 150,
-                      child: Lottie.network(
+                      child: Lottie.asset(
                         fit: BoxFit.cover,
-                          "https://lottie.host/014dd969-e665-4e3b-bfcb-32d0a06a4684/JQjTjPdcUm.json",
+                          "assets/LottieAnimations/woman_thinking_food.json",
                     )),
                     TabBar(tabs: [
                       const Tab(child:const Text("Login"),),

@@ -1,17 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fastfood_app/Core/Utils/Utils.dart';
 import 'package:fastfood_app/application/providers/Providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:fastfood_app/application/providers/Providers.dart';
 import 'cart.dart';
 
-class Homescreen extends ConsumerStatefulWidget {
-  const Homescreen({super.key});
-
-  @override
-  ConsumerState<Homescreen> createState() => _HomescreenState();
-}
-
-class _HomescreenState extends ConsumerState<Homescreen> {
+class Homescreen extends StatelessWidget {
 
   List countryFoods = [
     {"image": "assets/img/cat_sri.png", "name": "Sri Lankan"},
@@ -48,9 +43,6 @@ class _HomescreenState extends ConsumerState<Homescreen> {
   ];
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,7 +62,16 @@ class _HomescreenState extends ConsumerState<Homescreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Hy "+ref.watch(userNameProvider)+"!",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Consumer(
+                            builder: (context,ref,child){
+                              final _name=ref.watch(customerStreamProvider);
+                              return _name.when(
+                                  data: (data){
+                                    return Text("Hy "+data.docs.first["name"]+"!",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.black),);
+                                  },
+                                  error:(e,s){return Text("Error: ${e.toString()}");},
+                                  loading:(){return const CircularProgressIndicator();});
+                            }),
                           IconButton(onPressed: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
                           }, icon:Icon(Icons.shopping_cart)),

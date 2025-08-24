@@ -8,7 +8,6 @@ Future<dynamic> ProfileUpdateAlertDialog({
   required String id,
   required String heading,
   required String currentValue,
-  dynamic? userProvider,
 })
 {
   return showDialog(context: context, builder: (context){
@@ -25,8 +24,6 @@ Future<dynamic> ProfileUpdateAlertDialog({
         },
             child: Text("Cancel")),
         TextButton(onPressed: (){
-          ref.read(userProvider.notifier).state=cV.text;
-
           FirebaseFirestore.instance.collection("customer").doc(id).update({
             heading.toLowerCase().trim():cV.text
           });

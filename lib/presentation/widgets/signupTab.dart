@@ -10,14 +10,14 @@ import 'package:lottie/lottie.dart';
 import 'package:fastfood_app/Core/Utils/Utils.dart';
 
 
-class SignupTab extends ConsumerStatefulWidget {
+class SignupTab extends StatefulWidget {
   const SignupTab({super.key});
 
   @override
-  ConsumerState<SignupTab> createState() => _SignupTabState();
+  State<SignupTab> createState() => _SignupTabState();
 }
 
-class _SignupTabState extends ConsumerState<SignupTab>
+class _SignupTabState extends State<SignupTab>
     with SingleTickerProviderStateMixin{
 
   final _formKey=GlobalKey<FormState>();
