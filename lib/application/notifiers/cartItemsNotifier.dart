@@ -17,6 +17,10 @@ class CartItemsNotifier extends StateNotifier<List<Map<String,dynamic>>>
     list.removeAt(index);
     state=list;
   }
+  Map<String,dynamic> getCartItem(int index)
+  {
+    return state[index];
+  }
   void setFavourite(int index,bool v)
   {
     dynamic list=[...state];

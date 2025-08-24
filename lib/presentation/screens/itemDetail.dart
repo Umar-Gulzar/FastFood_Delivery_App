@@ -104,25 +104,47 @@ class ItemDetail extends ConsumerWidget{
               ),
             ),
             Spacer(),
-            SizedBox(
-              width: 180,
-              child: ElevatedButton(onPressed: (){
-                  ref.read(cartItemsProvider.notifier).addCartItem(value: selectedItem);
-                  ref.read(cartItemQuantity.notifier).addQuantity();
-                  ref.read(totalPriceProvider.notifier).state=ref.watch(totalPriceProvider) +
-                      ref.watch(cartItemsProvider.notifier).getPrice( ref.watch(cartItemsProvider.notifier).getLength()-1).toInt();
-              },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange[300],
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(Icons.add_shopping_cart,color: Colors.white,),
-                      Text("Add to Cart",style: TextStyle(color: Colors.white),),
-                    ],
-                  )),
+            Consumer(
+              builder: (context,ref,child)=>SizedBox(
+                width: 180,
+                child: ElevatedButton(onPressed: (){
+                  var cartItem;
+                  bool isEqual=false;
+                  for(int i=0;i<ref.watch(cartItemsProvider.notifier).getLength();i++)
+                    {
+                      cartItem=ref.watch(cartItemsProvider.notifier).getCartItem(i);
+                      if(selectedItem==cartItem){
+                        isEqual=true;
+                        break;
+                      }
+                    }
+                  if(isEqual==false) {
+                    ref.read(cartItemsProvider.notifier).addCartItem(
+                        value: selectedItem);
+                    ref.read(cartItemQuantity.notifier).addQuantity();
+                    ref
+                        .read(totalPriceProvider.notifier)
+                        .state = ref.watch(totalPriceProvider) +
+                        ref
+                            .watch(cartItemsProvider.notifier)
+                            .getPrice(ref
+                            .watch(cartItemsProvider.notifier)
+                            .getLength() - 1)
+                            .toInt();
+                  }
+                },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrange[300],
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.add_shopping_cart,color: Colors.white,),
+                        Text("Add to Cart",style: TextStyle(color: Colors.white),),
+                      ],
+                    )),
+              ),
             ),
             SizedBox(height: 60,),
           ],
