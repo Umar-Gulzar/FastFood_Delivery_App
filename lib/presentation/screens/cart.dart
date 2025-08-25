@@ -217,16 +217,13 @@ class _CartState extends ConsumerState<Cart> {
             SizedBox(
               width: 180,
               child: ElevatedButton(onPressed: (){
-                NotificationServices().showLocalNotification(
-                    title: "Foodies",
-                    body:"Your order has been successfully placed and currently being processed."
-                );
-                // makePayment(context,ref.watch(totalPriceProvider), "Uae").then((v){
-                //   NotificationServices().showLocalNotification(
-                //       title: "Foodies",
-                //       body:"Your order has been successfully placed and currently being processed."
-                //   );
-                // });
+
+                makePayment(context,ref.watch(totalPriceProvider), "usd").then((v){
+                  NotificationServices().showLocalNotification(
+                      title: "Foodies",
+                      body:"Your order has been successfully placed and currently being processed."
+                  );
+                });
 
               },
                 style: ElevatedButton.styleFrom(
