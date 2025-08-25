@@ -41,3 +41,47 @@ Initialize PaymentSheet
 
 **Step_5**
 Present PaymentSheet
+
+
+
+**_Push_Notification_**
+android/app/build.gradle ma  applicationId = "com.umartech.firebase_practice"  iss ma example change karna.
+# in android/app/build.gradle ma make these changes:     Error Fixed of local_notification....
+in compileOption{
+//old code
+//add below
+isCoreLibraryDesugaringEnabled = true
+}
+and at end of this file add this:
+dependencies {
+// ✅ Kotlin DSL uses function style
+coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+}
+# ---------------------------------------------------------------------------------- #
+
+--->First get notification permission.
+--->get FCM/Device token then print it on console copy and paste in firebase console messaging
+# Add below in android/aoo/src/main/AndroidManifest.xml
+<meta-data
+android:name="com.google.firebase.messaging.default_notification_channel_id"
+android:value="high_importance_channel" />
+# important common problems
+har project ki apni alag deviceToken ho ga jo firebase ma har project ko alag alag dy gy.
+deviceToken get karwa ky print karwana.
+In case of token expire tu isTokenRefresh() run kar ky aagr console par refresh print ho tu dobara firebase ma new token dy gy.
+
+**Firebase sy show karwany ly liya:**
+NotificationServices().requestNotificationPermission();
+NotificationServices().isTokenRefresh();
+NotificationServices().getDeviceToken().then((value){
+print(value!);
+});
+NotificationServices().firebaseMessage();
+
+**LocalNotification show karwany ky liya:**
+NotificationServices().requestNotificationPermission();
+NotificationServices().initLocalNotifications(RemoteMessage(data:{}));
+NotificationServices().showLocalNotification(
+title: "Foodies",
+body:"Your order has been successfully placed and currently being processed."
+);

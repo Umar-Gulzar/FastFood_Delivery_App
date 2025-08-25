@@ -1,5 +1,7 @@
+import 'package:fastfood_app/Services/pushNotification.dart';
 import 'package:fastfood_app/Services/stripePaymentSheet.dart';
 import 'package:fastfood_app/application/providers/Providers.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'foodMenu.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +17,20 @@ class _CartState extends ConsumerState<Cart> {
   int singleItemPrice=0;
 
   @override
-  void ConsumerinitState(WidgetRef ref) {
+  void initState() {
+    NotificationServices().requestNotificationPermission();
+    NotificationServices().initLocalNotifications(RemoteMessage(data:{}));
+    NotificationServices().firebaseMessage();
+    NotificationServices().isTokenRefresh();
+    NotificationServices().getDeviceToken().then((value){
+      print(value!);
+    });
+
     // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-
     var length = ref.watch(cartItemsProvider).length;
 
     return Scaffold(
@@ -208,7 +217,17 @@ class _CartState extends ConsumerState<Cart> {
             SizedBox(
               width: 180,
               child: ElevatedButton(onPressed: (){
-                makePayment(context,10, "Uae");
+                NotificationServices().showLocalNotification(
+                    title: "Foodies",
+                    body:"Your order has been successfully placed and currently being processed."
+                );
+                // makePayment(context,ref.watch(totalPriceProvider), "Uae").then((v){
+                //   NotificationServices().showLocalNotification(
+                //       title: "Foodies",
+                //       body:"Your order has been successfully placed and currently being processed."
+                //   );
+                // });
+
               },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepOrange[300],
